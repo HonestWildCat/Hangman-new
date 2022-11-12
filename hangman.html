@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman</title>
+    <style>
+        body{
+            background-color: #ffdfd5;
+            text-align: center;
+        }
+        
+        input{
+            padding: 0% 1.5% 0% 1.5%;
+            font-size: 5.9em;
+            font-weight: bold;
+            width: 17%;
+        }
+        
+        .row2{
+            padding-bottom: 2%;
+        }
+
+        p.text{
+            font-size: 3em;
+            font-weight: bold;
+        }
+
+        .word{
+            font-size: 5em;
+            font-weight: bold;
+        }
+
+        p{
+            display: inline;
+            padding: 0% 1.5% 0% 1.5%;
+        }
+
+        .alphabet{
+            margin-top: 3%;
+        }
+
+        .menu{
+            justify-content: space-between;
+            margin-top: 2%;
+        }
+
+        .hearts{
+            color: crimson;
+            font-size: 5em;
+            font-weight: bold;
+        }
+
+        .letter{
+            background-color: rgb(249, 139, 139);
+            margin: 0.3%;
+            border: none;
+            border-radius: 5%;
+            box-shadow: -10px -10px 0px 0px rgb(135, 60, 60) inset;
+        }
+
+        .letter:hover{
+            background-color: rgb(204, 94, 94);
+            box-shadow: -10px -10px 0px 0px rgb(86, 36, 36) inset;
+        }
+
+        .letter:disabled{
+            background-color: #ffdfd5;
+            box-shadow: -10px -10px 0px 0px #ffdfd5 inset;
+            color: #ffdfd5;
+        }
+
+        canvas{
+            position: absolute;
+        }
+
+        .word{
+            margin: 10% 0% 10% 0%;
+        }
+
+        .theme{
+            margin: 5% 0% 5% 0%;
+        }
+
+        #score{
+            margin: 0% 15% 0% 15%;
+        }
+
+        .menu_button{
+            background-color: rgb(249, 139, 139);
+            margin: 0.3%;
+            border: none;
+            border-radius: 5%;
+            box-shadow: -10px -10px 0px 0px rgb(135, 60, 60) inset;
+        }
+
+        .menu_button:hover{
+            background-color: rgb(204, 94, 94);
+            box-shadow: -10px -10px 0px 0px rgb(86, 36, 36) inset;
+        }
+
+        #version{
+            text-align: end;
+            font-size: 2em;
+            margin-right: 2%;
+            margin-top: 3%;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="man" width="10" height="10" style="border:1px solid #000000;"></canvas>
+    <div class="menu">
+        <input type="button" value="&#8635;" id="repeat" class="menu_button">
+        <p class="text" id="score">Счёт:0</p>
+        <input type="button" value="&#63;" id="help" class="menu_button">
+    </div>
+    <div class="theme">
+        <p class="text">Тема</p>
+    </div>
+    <div class="word">
+        <p>СЛОВО</p>
+    </div>
+    <div class="hearts">
+        <p>&#10084; &#10084; &#10084; &#10084; &#10084; &#10084; &#10084;</p>
+    </div>
+    <div class="alphabet">
+        <div class="row1">
+            <input type="button" value="А" id="А" class="letter" onclick="A()">
+            <input type="button" value="Е" id="Е" class="letter" onclick="E()">
+            <input type="button" value="Ё" id="Ё" class="letter" onclick="Io()">
+            <input type="button" value="И" id="И" class="letter" onclick="I()">
+            <input type="button" value="О" id="О" class="letter" onclick="O()">
+        <div class="row2">
+            <input type="button" value="У" id="У" class="letter" onclick="U()">
+            <input type="button" value="Ы" id="Ы" class="letter" onclick="neI()">
+            <input type="button" value="Э" id="Э" class="letter" onclick="Ei()">
+            <input type="button" value="Ю" id="Ю" class="letter" onclick="Yu()">
+            <input type="button" value="Я" id="Я" class="letter" onclick="Ya()">
+        </div>
+        <div class="row3">
+            <input type="button" value="Б" id="Б" class="letter" onclick="Be()">
+            <input type="button" value="В" id="В" class="letter" onclick="Ve()">
+            <input type="button" value="Г" id="Г" class="letter" onclick="Ge()">
+            <input type="button" value="Д" id="Д" class="letter" onclick="De()">
+            <input type="button" value="Ж" id="Ж" class="letter" onclick="Dj()">
+        </div>
+        <div class="row4">
+            <input type="button" value="З" id="З" class="letter" onclick="Ze()">
+            <input type="button" value="Й" id="Й" class="letter" onclick="Iy()">
+            <input type="button" value="К" id="К" class="letter" onclick="Ka()">
+            <input type="button" value="Л" id="Л" class="letter" onclick="El()">
+            <input type="button" value="М" id="М" class="letter" onclick="Em()">
+        </div>
+        <div class="row5">
+            <input type="button" value="Н" id="Н" class="letter" onclick="En()">
+            <input type="button" value="П" id="П" class="letter" onclick="Pe()">
+            <input type="button" value="Р" id="Р" class="letter" onclick="Er()">
+            <input type="button" value="С" id="С" class="letter" onclick="Es()">
+            <input type="button" value="Т" id="Т" class="letter" onclick="Te()">
+        </div>
+        <div class="row6">
+            <input type="button" value="Ф" id="Ф" class="letter" onclick="Fe()">
+            <input type="button" value="Х" id="Х" class="letter" onclick="Ha()">
+            <input type="button" value="Ц" id="Ц" class="letter" onclick="Tse()">
+            <input type="button" value="Ч" id="Ч" class="letter" onclick="Che()">
+            <input type="button" value="Ш" id="Ш" class="letter" onclick="Sha()">
+        </div>
+        <div class="row7">
+            <input type="button" value="Щ" id="Щ" class="letter" onclick="Shcha()">
+            <input type="button" value="Ъ" id="Ъ" class="letter" onclick="Tvz()">
+            <input type="button" value="Ь" id="Ь" class="letter" onclick="Mz()">
+        </div>
+        <div id="version">
+        <p>V 0.1</p>
+        </div>
+    </div>
+    <script>
+        function A(){
+            react("А", 1)
+        };
+        
+        function Be(){
+            react("Б", 1)
+        };
+
+        function Ve(){
+            react("В", 1)
+        };
+
+        function Ge(){
+            react("Г", 1)
+        };
+
+        function De(){
+            react("Д", 1)
+        };
+
+        function E(){
+            react("Е", 1)
+        };
+
+        function Io(){
+            react("Ё", 1)
+        };
+
+        function Dj(){
+            react("Ж", 1)
+        };
+
+        function Ze(){
+            react("З", 1)
+        };
+
+        function I(){
+            react("И", 1)
+        };
+
+        function Iy(){
+            react("Й", 1)
+        };
+
+        function Ka(){
+            react("К", 1)
+        };
+
+        function El(){
+            react("Л", 1)
+        };
+
+        function Em(){
+            react("М", 1)
+        };
+
+        function En(){
+            react("Н", 1)
+        };
+
+        function O(){
+            react("О", 1)
+        };
+
+        function Pe(){
+            react("П", 1)
+        };
+
+        function Er(){
+            react("Р", 1)
+        };
+
+        function Es(){
+            react("С", 1)
+        };
+
+        function Te(){
+            react("Т", 1)
+        };
+
+        function U(){
+            react("У", 1)
+        };
+
+        function Fe(){
+            react("Ф", 1)
+        };
+
+        function Ha(){
+            react("Х", 1)
+        };
+
+        function Tse(){
+            react("Ц", 1)
+        };
+
+        function Che(){
+            react("Ч", 1)
+        };
+
+        function Sha(){
+            react("Ш", 1)
+        };
+
+        function Shcha(){
+            react("Щ", 1)
+        };
+
+        function Tvz(){
+            react("Ъ", 1)
+        };
+
+        function neI(){
+            react("Ы", 1)
+        };
+
+        function Mz(){
+            react("Ь", 1)
+        };
+
+        function Ei(){
+            react("Э", 1)
+        };
+
+        function Yu(){
+            react("Ю", 1)
+        };
+
+        function Ya(){
+            react("Я", 1)
+        };
+
+        function react(id, letter){
+            document.getElementById(id).setAttribute('disabled', 'disabled');
+        }
+    </script>
+</body>
+</html>
