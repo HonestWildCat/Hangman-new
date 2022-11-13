@@ -10,7 +10,7 @@
         }
         
         input{
-            padding: 0% 1.5% 0% 1.5%;
+            padding: 1% 2% 1% 2%;
             font-size: 5.9em;
             font-weight: bold;
             width: 17%;
@@ -104,23 +104,27 @@
             margin-right: 2%;
             margin-top: 3%;
         }
+
+        #help{
+            font-size: 5em;
+        }
     </style>
 </head>
-<body>
+<body onload="on_load()">
     <canvas id="man" width="10" height="10" style="border:1px solid #000000;"></canvas>
     <div class="menu">
-        <input type="button" value="&#8635;" id="repeat" class="menu_button">
-        <p class="text" id="score">Счёт:0</p>
-        <input type="button" value="&#63;" id="help" class="menu_button">
+        <input type="button" value="&#63;" id="description" class="menu_button" onclick="description()">
+        <p class="text" id="score">Счёт: 0</p>
+        <input type="button" value="&#128161;" id="help" class="menu_button" onclick="help()">
     </div>
     <div class="theme">
-        <p class="text">Тема</p>
+        <p class="text" id="theme">Тема</p>
     </div>
     <div class="word">
-        <p>СЛОВО</p>
+        <p id="hidden"></p>
     </div>
     <div class="hearts">
-        <p>&#10084; &#10084; &#10084; &#10084; &#10084; &#10084; &#10084;</p>
+        <p id="hearts">&#10084; &#10084; &#10084; &#10084; &#10084; &#10084; &#10084;</p>
     </div>
     <div class="alphabet">
         <div class="row1">
@@ -174,141 +178,228 @@
         </div>
     </div>
     <script>
+        var dictionary = [["морковка", "еда", "известный овощ"], ["кошка", "животные", "одно из самых популярных домашних животных"], ["январь", "даты", "месяц"]];
+        var word = "";
+        var hidden_word = [];
+        var prompt = "";
+        var hearts = 7;
+        var alpa = ["А", "Б", "В", "Г", "Д", "Е", "Ё", "Ж", "З", "И", "Й", "К", "Л", "М", "Н", "О", "П", "Р", "С", "Т", "У", "Ф", "Х", "Ц", "Ч", "Ш", "Щ", "Ъ", "Ы", "Ь", "Э", "Ю", "Я"];
+        var score = 0;
+
+        function on_load(){
+            // Запускает скрпаты при загрузке страницы и начале новой игры.
+            for(let i = 0; i < 33; i ++){
+                    document.getElementById(alpa[i]).removeAttribute('disabled');
+                };
+            hearts = 7;
+            hidden_word = [];
+            select_word();
+            show_underlines();
+        }
+
         function A(){
-            react("А", 1)
+            react("А");
         };
         
         function Be(){
-            react("Б", 1)
+            react("Б");
         };
 
         function Ve(){
-            react("В", 1)
+            react("В");
         };
 
         function Ge(){
-            react("Г", 1)
+            react("Г");
         };
 
         function De(){
-            react("Д", 1)
+            react("Д");
         };
 
         function E(){
-            react("Е", 1)
+            react("Е");
         };
 
         function Io(){
-            react("Ё", 1)
+            react("Ё");
         };
 
         function Dj(){
-            react("Ж", 1)
+            react("Ж");
         };
 
         function Ze(){
-            react("З", 1)
+            react("З");
         };
 
         function I(){
-            react("И", 1)
+            react("И");
         };
 
         function Iy(){
-            react("Й", 1)
+            react("Й");
         };
 
         function Ka(){
-            react("К", 1)
+            react("К");
         };
 
         function El(){
-            react("Л", 1)
+            react("Л");
         };
 
         function Em(){
-            react("М", 1)
+            react("М");
         };
 
         function En(){
-            react("Н", 1)
+            react("Н");
         };
 
         function O(){
-            react("О", 1)
+            react("О");
         };
 
         function Pe(){
-            react("П", 1)
+            react("П");
         };
 
         function Er(){
-            react("Р", 1)
+            react("Р");
         };
 
         function Es(){
-            react("С", 1)
+            react("С");
         };
 
         function Te(){
-            react("Т", 1)
+            react("Т");
         };
 
         function U(){
-            react("У", 1)
+            react("У");
         };
 
         function Fe(){
-            react("Ф", 1)
+            react("Ф");
         };
 
         function Ha(){
-            react("Х", 1)
+            react("Х");
         };
 
         function Tse(){
-            react("Ц", 1)
+            react("Ц");
         };
 
         function Che(){
-            react("Ч", 1)
+            react("Ч");
         };
 
         function Sha(){
-            react("Ш", 1)
+            react("Ш");
         };
 
         function Shcha(){
-            react("Щ", 1)
+            react("Щ");
         };
 
         function Tvz(){
-            react("Ъ", 1)
+            react("Ъ");
         };
 
         function neI(){
-            react("Ы", 1)
+            react("Ы");
         };
 
         function Mz(){
-            react("Ь", 1)
+            react("Ь");
         };
 
         function Ei(){
-            react("Э", 1)
+            react("Э");
         };
 
         function Yu(){
-            react("Ю", 1)
+            react("Ю");
         };
 
         function Ya(){
-            react("Я", 1)
+            react("Я");
         };
 
-        function react(id, letter){
+        function react(id){
+            // Реагирует на нажатие: активирует другие функции, определяет конец игры.
             document.getElementById(id).setAttribute('disabled', 'disabled');
-        }
+            check(id.toLowerCase());
+            show_underlines();
+            if(hearts <= 0){
+                alert("Вы проиграли...");
+                on_load();
+            }
+            else if(hidden_word.indexOf("_") == -1){
+                alert("\u2B50 Вы выиграли! \u2B50");
+                score += word.length;
+                document.getElementById("score").innerHTML = "Счёт: " + score;
+                on_load();
+            };
+        };
+
+        function select_word(){
+            // Выбирает случайное слово из dictionary, выводит на экран тему.
+            let num = Math.round(-0.5 + Math.random() * dictionary.length);
+            word = dictionary[num][0];
+            prompt = dictionary[num][2];
+            document.getElementById("theme").innerHTML = dictionary[num][1];
+            for(let i = 0; i < word.length; i ++){
+                hidden_word.push("_");
+            }
+            //alert(word);
+        };
+
+        function show_underlines(){
+            // Выводит на экран подчеркивания и сердца.
+            var toshow = hidden_word.join(" ");
+            document.getElementById("hidden").innerHTML = toshow;
+            document.getElementById("hearts").innerHTML = "\u2764".repeat(hearts);
+        };
+
+        function check(letter){
+            // Проверяет есть ли введенная буква в слове, если нет - отнимает сердца.
+            let tmp = true;
+            for(let i = 0; i < word.length; i ++){
+                if(word[i] === letter){
+                    hidden_word[i] = letter;
+                    tmp = false;
+                };
+            };
+            if(tmp == true){
+                hearts -= 1;
+            }
+        };
+
+        function help(){
+            // Открывает 1 букву за 3 очка.
+            if(score > 2){
+                    let tmp = 20;
+                do{
+                    tmp = Math.round(-0.5 + Math.random() * word.length);
+                }while(hidden_word[tmp] != "_");
+                react(word[tmp].toUpperCase());
+                score -= 3;
+                document.getElementById("score").innerHTML = "Счёт: " + score;
+            };
+        };
+
+        function description(){
+            // Открывает описание за 1 очко.
+            if(score > 0){
+                alert(prompt)
+                score --;
+                document.getElementById("score").innerHTML = "Счёт: " + score;
+            };
+        };
     </script>
 </body>
 </html>
