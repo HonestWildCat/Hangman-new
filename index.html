@@ -6,7 +6,7 @@
     <title>Hangeman</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body onload="newGame();">
+<body onload="newGame(); changeColorTheme();">
     <div id="game-box">
         <header>
             <button id="menu-btn" class="menu-btn">&#9776;</button>
@@ -16,7 +16,7 @@
                 <section id="money-quantity">0</section>
             </div>
             <button id="description-btn" class="menu-btn" onclick="open_description();">i</button>
-            <button id="help-btn" class="menu-btn">&#128161;</button>
+            <button id="help-btn" class="menu-btn" onclick="help();">&#128161;</button>
         </header>
 
         <main>
@@ -43,7 +43,7 @@
         </main>
 
         <footer>
-            <div id="photo-author">Photo by: </div>
+            <div id="photo-author" onclick="changeColorTheme();">Photo by: Cameron Casey</div>
             <div id="version">V 0.6</div>
         </footer>
     </div>
