@@ -45,7 +45,7 @@ const colorThemes = {
     city: {bgImage: "pexels-cameron-casey-1722183.jpg", bgAuthor: "Cameron Casey", heartsColor: "rgb(181, 97, 65)", heartsShadowColor: "rgb(66, 29, 29)"},
     sea:{bgImage: "pexels-annam-w-1074449.jpg", bgAuthor: "anna-m. w.", heartsColor: "rgb(81, 195, 202)", heartsShadowColor: "rgb(0, 24, 50)"},
     planks:{bgImage: "pexels-fwstudio-164005.jpg", bgAuthor: "FWStudio", heartsColor: "rgb(124, 10, 2)", heartsShadowColor: "rgb(44, 4, 24)"},
-    wood:{bgImage: "pexels-fwstudio-172289.jpg", bgAuthor: "FWStudio", heartsColor: "rgb()", heartsShadowColor: "rgb()"},
+    wood:{bgImage: "pexels-fwstudio-172289.jpg", bgAuthor: "FWStudio", heartsColor: "rgb(81, 19, 0)", heartsShadowColor: "rgb(0, 0, 0)"},
     autumn:{bgImage: "pexels-irina-iriser-1590549.jpg", bgAuthor: "Irina Iriser", heartsColor: "rgb(241, 148, 17)", heartsShadowColor: "rgb(163, 70, 34)"},
     pine:{bgImage: "pexels-lumn-1410224.jpg", bgAuthor: "Lum3n", heartsColor: "rgb(118, 163, 35)", heartsShadowColor: "rgb(58, 83, 38)"},
     jungle:{bgImage: "pexels-photo-931007.jpeg", bgAuthor: "Oliver Sjöström", heartsColor: "rgb(179, 183, 50)", heartsShadowColor: "rgb(74, 74, 5)"},
@@ -91,9 +91,8 @@ function showWord(){
 
     heartsBox.replaceChildren();
     for(let i = 0; i < hearts; i++){
-        const heart = document.createElement("section");
-        heart.innerHTML = "&#x2764;";
-        heartsBox.appendChild(heart);
+        // const heart = document.createElement("svg");
+        heartsBox.innerHTML += '<svg width="800px" height="800px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.39 20.87a.696.696 0 0 1-.78 0C9.764 19.637 2 14.15 2 8.973c0-6.68 7.85-7.75 10-3.25 2.15-4.5 10-3.43 10 3.25 0 5.178-7.764 10.664-9.61 11.895z" fill="#000000"/></svg>';
     }
 
     moneyQuantity.innerHTML = money;
@@ -154,8 +153,9 @@ function endGame(result){
         modalHeader.innerHTML = "&#9733; Победа! &#9733;";
         const hiddenWordText = document.createElement("p");
         hiddenWordText.innerText = `Слово: ${word}`;
-        const gainedMoneyText = document.createElement("p");
-        gainedMoneyText.innerHTML = `<b>+${money - moneyBefore}&#128176;</b>`;
+        const gainedMoneyText = document.createElement("div");
+        gainedMoneyText.innerHTML = `<b>+${money - moneyBefore}</b><section class="money-img"></section>`;
+        gainedMoneyText.classList.add("gainedMoneyText")
         modalTextBox.replaceChildren(hiddenWordText, gainedMoneyText);
     }
     else{
@@ -179,10 +179,18 @@ function help(){
         onInput(word[letterIndex].toUpperCase(), button);
         money -= 3;
         moneyQuantity.innerHTML = money;
-    };
+    }
+    else{
+        modal.style.display = "flex";
+        const hiddenWordText = document.createElement("p");
+        hiddenWordText.innerText = `Недостаточно монет.`;
+        modalHeader.innerText = "";
+        modalTextBox.replaceChildren(hiddenWordText);
+    }
 }
 
 function open_description(){
+    modalHeader.innerHTML = "Описание слова: ";
     modalTextBox.innerText = prompt;
     modal.style.display = "flex";
 };
@@ -203,6 +211,11 @@ function changeColorTheme(){
     body.style.setProperty('--hearts-color', theme["heartsColor"]);
     body.style.setProperty('--hearts-shadow-color', theme["heartsShadowColor"]);
     photoAuthor.innerText = `Photo by: ${theme["bgAuthor"]}`;
+}
+
+function addMoney(){
+    money += 100;
+    moneyQuantity.innerHTML = money;
 }
 
 function createKeyboard(){

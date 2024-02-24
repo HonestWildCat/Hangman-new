@@ -9,14 +9,14 @@
 <body onload="newGame(); changeColorTheme();">
     <div id="game-box">
         <header>
-            <button id="menu-btn" class="menu-btn">&#9776;</button>
-            <button id="shop-btn" class="menu-btn" onclick="window.location.href = './gameShop.html';">&#128722;</button>
+            <button id="menu-btn" class="menu-btn"></button>
+            <button id="shop-btn" class="menu-btn" onclick="window.location.href = './gameShop.html';"></button>
             <div id="money">
-                <section>&#128176;</section>
+                <section class="money-img"></section>
                 <section id="money-quantity">0</section>
             </div>
-            <button id="description-btn" class="menu-btn" onclick="open_description();">i</button>
-            <button id="help-btn" class="menu-btn" onclick="help();">&#128161;</button>
+            <button id="description-btn" class="menu-btn" onclick="open_description();"></button>
+            <button id="help-btn" class="menu-btn" onclick="help();"></button>
         </header>
 
         <main>
@@ -44,7 +44,7 @@
 
         <footer>
             <div id="photo-author" onclick="changeColorTheme();">Photo by: Cameron Casey</div>
-            <div id="version">V 0.6</div>
+            <div id="version" onclick="addMoney();">V 0.7</div>
         </footer>
     </div>
     <div id="menu">
