@@ -22,7 +22,7 @@ To help you in guessing the hidden word, the words divided in categories, which 
 Also, you can read the words description by pressing the “i” button or buy the hint, by pressing the light bulb, that reveals one hidden letter.
 
 
-> **Note**
+> **Note:**
 > The game is still in progress, so buttons “☰” - “menu” and “🛒” - “shop” are not working currently.
 
   
@@ -48,7 +48,7 @@ Also, you can read the words description by pressing the “i” button or buy t
 Для допомоги у вгадуванні прихованого слова, слова розділені на категорії, які відображаються над прихованим словом. Також ви можете прочитати опис слів, натиснувши кнопку “i”, або придбати підказку, натиснувши на лампочку, яка розкриє одну приховану букву.
 
   
-> **Note**
+> **Зверніть увагу:**
 > Гра все ще знаходиться в розробці, тому кнопки “☰” (меню) та “🛒” (магазин) наразі не працюють.
 
   
@@ -77,5 +77,5 @@ Also, you can read the words description by pressing the “i” button or buy t
 Также вы можете прочитать описание слов, нажав кнопку “i”, или купить подсказку, нажав на лампочку, которая раскроет одну скрытую букву.
 
 
-> **Note**
+> **Обратите внимание:**
 > Игра все еще находится в разработке, поэтому кнопки “☰” (меню) и “🛒” (магазин) в настоящее время не работают.
